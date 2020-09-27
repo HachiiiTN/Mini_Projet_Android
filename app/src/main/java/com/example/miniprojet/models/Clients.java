@@ -1,4 +1,4 @@
-package com.example.miniprojet.Models;
+package com.example.miniprojet.models;
 
 public class Clients {
 

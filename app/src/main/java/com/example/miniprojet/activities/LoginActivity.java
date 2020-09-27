@@ -1,4 +1,4 @@
-package com.example.miniprojet;
+package com.example.miniprojet.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.miniprojet.MainActivity;
 import com.example.miniprojet.R;
+import com.example.miniprojet.managers.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,16 +31,22 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SessionManager sessionManager;
+
     private EditText usernameField, passwordField;
     private ProgressBar progressBar;
     private Button loginBtn;
-
-    private AlertDialog loginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sessionManager = new SessionManager(getApplicationContext());
+        if (sessionManager.isLoggedIn()) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
 
         initLayouts();
 
@@ -51,7 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 String strPassword = passwordField.getText().toString();
 
                 if (strUsername.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.empty_username), Toast.LENGTH_LONG).show();
+                    String loginUserError = getString(R.string.empty_username);
+                    Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
                 } else if (strPassword.isEmpty()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
                 } else if (strPassword.length() < 5) {
@@ -62,6 +69,21 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void initLayouts() {
@@ -110,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                         URLEncoder.encode(user, "UTF-8") + "&&" +
                         URLEncoder.encode("pass", "UTF-8") + "=" +
                         URLEncoder.encode(pass, "UTF-8");
-                Log.v("loginData", data);
+
                 writer.write(data);
                 writer.flush();
                 writer.close();
@@ -136,25 +158,20 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Log.v("Result", s);
-
-            String message = "";
             progressBar.setVisibility(View.GONE);
 
             if (s.contains("server_failed")) {
-                message = getString(R.string.server_failed);
-                displayAlertDialog(message);
+                displayAlertDialog(getString(R.string.server_failed));
             } else if (s.contains("login_failed")) {
-                message = getString(R.string.login_failed);
-                displayAlertDialog(message);
-            }
-            else if (s.contains("login_success")) {
-                message = getString(R.string.login_success);
-                displayAlertDialog(message);
+                displayAlertDialog(getString(R.string.login_failed));
+            } else if (s.contains("login_success")) {
+                displayAlertDialog(getString(R.string.login_success));
 
                 Intent i = new Intent();
                 i.setClass(context.getApplicationContext(), MainActivity.class);
                 context.startActivity(i);
+
+                sessionManager.setLogin(true);
             }
         }
 
