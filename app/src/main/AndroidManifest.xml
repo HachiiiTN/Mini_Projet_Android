@@ -10,11 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".navigations.AdresseActivity"></activity>
-        <activity android:name=".navigations.ClientActivity" />
-        <activity android:name=".navigations.MessageActivity" />
-        <activity android:name=".navigations.InterAssignActivity" />
-        <activity android:name=".navigations.InterventionActivity" />
         <activity
             android:name=".managers.Splash"
             android:theme="@style/AppTheme.NoActionBar">
