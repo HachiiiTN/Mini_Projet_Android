@@ -1,4 +1,4 @@
-package com.example.miniprojet.activities;
+package com.example.miniprojet;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.miniprojet.MainActivity;
 import com.example.miniprojet.R;
-import com.example.miniprojet.manager.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -33,54 +31,37 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private SessionManager sessionManager;
-
     private EditText usernameField, passwordField;
     private ProgressBar progressBar;
     private Button loginBtn;
 
+    private AlertDialog loginDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+        setContentView(R.layout.activity_login);
 
-        new CountDownTimer(1500,1000){
+        initLayouts();
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long millisUntilFinished){}
+            public void onClick(View v) {
+                String strUsername = usernameField.getText().toString();
+                String strPassword = passwordField.getText().toString();
 
-            @Override
-            public void onFinish(){
-                LoginActivity.this.setContentView(R.layout.activity_login);
-
-                sessionManager = new SessionManager(getApplicationContext());
-                if (sessionManager.isLoggedIn()) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                if (strUsername.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.empty_username), Toast.LENGTH_LONG).show();
+                } else if (strPassword.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
+                } else if (strPassword.length() < 5) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
+                } else {
+                    LoginTask loginTask = new LoginTask(LoginActivity.this);
+                    loginTask.execute(strUsername, strPassword);
                 }
-
-                initLayouts();
-
-                loginBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String strUsername = usernameField.getText().toString();
-                        String strPassword = passwordField.getText().toString();
-
-                        if (strUsername.isEmpty()) {
-                            String loginUserError = getString(R.string.empty_username);
-                            Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
-                        } else if (strPassword.isEmpty()) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
-                        } else if (strPassword.length() < 5) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
-                        } else {
-                            LoginTask loginTask = new LoginTask(LoginActivity.this);
-                            loginTask.execute(strUsername, strPassword);
-                        }
-                    }
-                });
             }
-        }.start();
+        });
     }
 
     private void initLayouts() {
@@ -129,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                         URLEncoder.encode(user, "UTF-8") + "&&" +
                         URLEncoder.encode("pass", "UTF-8") + "=" +
                         URLEncoder.encode(pass, "UTF-8");
-
+                Log.v("loginData", data);
                 writer.write(data);
                 writer.flush();
                 writer.close();
@@ -155,21 +136,25 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            Log.v("Result", s);
+
+            String message = "";
             progressBar.setVisibility(View.GONE);
 
             if (s.contains("server_failed")) {
-                displayAlertDialog(getString(R.string.server_failed));
+                message = getString(R.string.server_failed);
+                displayAlertDialog(message);
             } else if (s.contains("login_failed")) {
-                displayAlertDialog(getString(R.string.login_failed));
+                message = getString(R.string.login_failed);
+                displayAlertDialog(message);
             }
             else if (s.contains("login_success")) {
-                displayAlertDialog(getString(R.string.login_success));
+                message = getString(R.string.login_success);
+                displayAlertDialog(message);
 
                 Intent i = new Intent();
                 i.setClass(context.getApplicationContext(), MainActivity.class);
                 context.startActivity(i);
-
-                sessionManager.setLogin(true);
             }
         }
 
