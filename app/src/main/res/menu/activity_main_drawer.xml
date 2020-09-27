@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_intervention"
+            android:icon="@drawable/task"
+            android:title="@string/menu_interventions" />
+        <item
+            android:id="@+id/nav_inter_assign"
+            android:icon="@drawable/assigned"
+            android:title="@string/menu_inter_assign" />
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/message"
+            android:title="@string/menu_messages" />
+        <item
+            android:id="@+id/nav_client"
+            android:icon="@drawable/client"
+            android:title="@string/menu_clients" />
+        <item
+            android:id="@+id/nav_adresse"
+            android:icon="@drawable/adresse"
+            android:title="@string/menu_adresses" />
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/settings"
+                android:title="@string/menu_parametres" />
+            <item
+                android:id="@+id/nav_propos"
+                android:icon="@drawable/propos"
+                android:title="@string/menu_propos" />
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/signout"
+                android:title="@string/menu_logout" />
+        </menu>
+    </item>
+</menu>
