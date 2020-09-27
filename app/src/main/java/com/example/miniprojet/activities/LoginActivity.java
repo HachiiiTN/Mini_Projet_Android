@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.miniprojet.MainActivity;
 import com.example.miniprojet.R;
-import com.example.miniprojet.manager.SessionManager;
+import com.example.miniprojet.managers.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,45 +40,50 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+        setContentView(R.layout.activity_login);
 
-        new CountDownTimer(1500,1000){
+        sessionManager = new SessionManager(getApplicationContext());
+        if (sessionManager.isLoggedIn()) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
+        initLayouts();
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long millisUntilFinished){}
+            public void onClick(View v) {
+                String strUsername = usernameField.getText().toString();
+                String strPassword = passwordField.getText().toString();
 
-            @Override
-            public void onFinish(){
-                LoginActivity.this.setContentView(R.layout.activity_login);
-
-                sessionManager = new SessionManager(getApplicationContext());
-                if (sessionManager.isLoggedIn()) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                if (strUsername.isEmpty()) {
+                    String loginUserError = getString(R.string.empty_username);
+                    Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
+                } else if (strPassword.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
+                } else if (strPassword.length() < 5) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
+                } else {
+                    LoginTask loginTask = new LoginTask(LoginActivity.this);
+                    loginTask.execute(strUsername, strPassword);
                 }
-
-                initLayouts();
-
-                loginBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String strUsername = usernameField.getText().toString();
-                        String strPassword = passwordField.getText().toString();
-
-                        if (strUsername.isEmpty()) {
-                            String loginUserError = getString(R.string.empty_username);
-                            Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
-                        } else if (strPassword.isEmpty()) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
-                        } else if (strPassword.length() < 5) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
-                        } else {
-                            LoginTask loginTask = new LoginTask(LoginActivity.this);
-                            loginTask.execute(strUsername, strPassword);
-                        }
-                    }
-                });
             }
-        }.start();
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void initLayouts() {
@@ -161,8 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                 displayAlertDialog(getString(R.string.server_failed));
             } else if (s.contains("login_failed")) {
                 displayAlertDialog(getString(R.string.login_failed));
-            }
-            else if (s.contains("login_success")) {
+            } else if (s.contains("login_success")) {
                 displayAlertDialog(getString(R.string.login_success));
 
                 Intent i = new Intent();

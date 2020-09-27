@@ -1,8 +1,7 @@
-package com.example.miniprojet.manager;
+package com.example.miniprojet.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class SessionManager {
 
