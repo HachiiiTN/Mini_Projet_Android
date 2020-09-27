@@ -1,4 +1,4 @@
-package com.example.miniprojet;
+package com.example.miniprojet.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.miniprojet.MainActivity;
 import com.example.miniprojet.R;
+import com.example.miniprojet.manager.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,6 +33,8 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SessionManager sessionManager;
+
     private EditText usernameField, passwordField;
     private ProgressBar progressBar;
     private Button loginBtn;
@@ -41,13 +44,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        new CountDownTimer(3000,1000){
+        new CountDownTimer(1500,1000){
             @Override
             public void onTick(long millisUntilFinished){}
 
             @Override
             public void onFinish(){
                 LoginActivity.this.setContentView(R.layout.activity_login);
+
+                sessionManager = new SessionManager(getApplicationContext());
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }
 
                 initLayouts();
 
@@ -159,6 +168,8 @@ public class LoginActivity extends AppCompatActivity {
                 Intent i = new Intent();
                 i.setClass(context.getApplicationContext(), MainActivity.class);
                 context.startActivity(i);
+
+                sessionManager.setLogin(true);
             }
         }
 
