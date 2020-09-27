@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,38 +36,42 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button loginBtn;
 
-    private AlertDialog loginDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.splash);
 
-        initLayouts();
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        new CountDownTimer(3000,1000){
             @Override
-            public void onClick(View v) {
-                String strUsername = usernameField.getText().toString();
-                String strPassword = passwordField.getText().toString();
+            public void onTick(long millisUntilFinished){}
 
-                if (strUsername.isEmpty()) {
-                    String loginUserError = getString(R.string.empty_username);
-                    Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
-                    loginDialog.setMessage(loginUserError);
-                    loginDialog.show();
+            @Override
+            public void onFinish(){
+                LoginActivity.this.setContentView(R.layout.activity_login);
 
-                } else if (strPassword.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
-                } else if (strPassword.length() < 5) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
-                } else {
-                    LoginTask loginTask = new LoginTask(LoginActivity.this);
-                    loginTask.execute(strUsername, strPassword);
+                initLayouts();
 
-                }
+                loginBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String strUsername = usernameField.getText().toString();
+                        String strPassword = passwordField.getText().toString();
+
+                        if (strUsername.isEmpty()) {
+                            String loginUserError = getString(R.string.empty_username);
+                            Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
+                        } else if (strPassword.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
+                        } else if (strPassword.length() < 5) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
+                        } else {
+                            LoginTask loginTask = new LoginTask(LoginActivity.this);
+                            loginTask.execute(strUsername, strPassword);
+                        }
+                    }
+                });
             }
-        });
+        }.start();
     }
 
     private void initLayouts() {
@@ -115,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         URLEncoder.encode(user, "UTF-8") + "&&" +
                         URLEncoder.encode("pass", "UTF-8") + "=" +
                         URLEncoder.encode(pass, "UTF-8");
-                Log.v("loginData", data);
+
                 writer.write(data);
                 writer.flush();
                 writer.close();
@@ -141,21 +146,15 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Log.v("Result", s);
-
-            String message = "";
             progressBar.setVisibility(View.GONE);
 
             if (s.contains("server_failed")) {
-                message = getString(R.string.server_failed);
-                displayAlertDialog(message);
+                displayAlertDialog(getString(R.string.server_failed));
             } else if (s.contains("login_failed")) {
-                message = getString(R.string.login_failed);
-                displayAlertDialog(message);
+                displayAlertDialog(getString(R.string.login_failed));
             }
             else if (s.contains("login_success")) {
-                message = getString(R.string.login_success);
-                displayAlertDialog(message);
+                displayAlertDialog(getString(R.string.login_success));
 
                 Intent i = new Intent();
                 i.setClass(context.getApplicationContext(), MainActivity.class);
