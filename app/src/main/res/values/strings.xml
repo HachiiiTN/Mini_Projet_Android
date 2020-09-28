@@ -11,6 +11,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">Wrong username or password !</string>
     <string name="login_success">Login successful</string>
+    <string name="time_out">Connection timed out</string>
 
 
     <!-- Drawer Navigation messages -->

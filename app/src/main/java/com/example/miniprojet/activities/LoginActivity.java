@@ -120,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(dbURL);
-                Log.v("dbURL", url.toString());
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("POST");
                 http.setDoInput(true);
@@ -172,6 +171,8 @@ public class LoginActivity extends AppCompatActivity {
                 context.startActivity(i);
 
                 sessionManager.setLogin(true);
+            } else {
+                displayAlertDialog(getString(R.string.time_out));
             }
         }
 
