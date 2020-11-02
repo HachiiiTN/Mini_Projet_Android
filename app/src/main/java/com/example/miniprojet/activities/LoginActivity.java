@@ -29,6 +29,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import static com.example.miniprojet.managers.DatabaseManager.LOGGED_USER;
+import static com.example.miniprojet.managers.DatabaseManager.LOGIN_URL;
+
 public class LoginActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
@@ -57,15 +60,15 @@ public class LoginActivity extends AppCompatActivity {
                 String strPassword = passwordField.getText().toString();
 
                 if (strUsername.isEmpty()) {
-                    String loginUserError = getString(R.string.empty_username);
-                    Toast.makeText(getApplicationContext(), loginUserError, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.empty_username), Toast.LENGTH_LONG).show();
                 } else if (strPassword.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.empty_password), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.empty_password), Toast.LENGTH_LONG).show();
                 } else if (strPassword.length() < 5) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
                 } else {
                     LoginTask loginTask = new LoginTask(LoginActivity.this);
                     loginTask.execute(strUsername, strPassword);
+                    LOGGED_USER = strUsername;
                 }
             }
         });
@@ -79,6 +82,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (sessionManager.isLoggedIn()) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
     @Override
@@ -116,10 +122,11 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String result = "";
             String user = strings[0], pass = strings[1];
-            String dbURL = "http://192.168.1.3/ExpertMaintenance/login.php";
 
             try {
-                URL url = new URL(dbURL);
+                URL url = new URL(LOGIN_URL);
+                Log.v("LOGIN_URL", url.toString());
+
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("POST");
                 http.setDoInput(true);
@@ -164,13 +171,12 @@ public class LoginActivity extends AppCompatActivity {
             } else if (s.contains("login_failed")) {
                 displayAlertDialog(getString(R.string.login_failed));
             } else if (s.contains("login_success")) {
+                sessionManager.setLogin(true);
                 displayAlertDialog(getString(R.string.login_success));
 
                 Intent i = new Intent();
                 i.setClass(context.getApplicationContext(), MainActivity.class);
                 context.startActivity(i);
-
-                sessionManager.setLogin(true);
             } else {
                 displayAlertDialog(getString(R.string.time_out));
             }
