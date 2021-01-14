@@ -5,14 +5,19 @@
     <string name="server_failed">Cannot connect to server !</string>
 
     <!-- Authentication messages -->
-    <string name="empty_username">Username is empty</string>
-    <string name="empty_password">Password is empty</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">Wrong username or password !</string>
-    <string name="login_success">Login successful</string>
-    <string name="time_out">Connection timed out</string>
+    <string name="empty_email">Email field is empty</string>
+    <string name="empty_password">Password field is empty</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="short_password">Password too short, minimum of 6 characters are required</string>
+    <string name="login_failed">Wrong email or password</string>
+    <string name="login_successful">Login successful</string>
+    <string name="login_time_out">Connection timed out</string>
 
+
+    <!-- Create new account messages -->
+    <string name="empty_nom">Last name field is empty</string>
+    <string name="empty_prenom">First name field is empty</string>
+    <string name="empty_confirm_password">Confirm password field is empty</string>
 
     <!-- Drawer Navigation messages -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -23,11 +28,55 @@
     <string name="menu_inter_assign">Interventions à assigner</string>
     <string name="menu_messages">Messages</string>
     <string name="menu_clients">Clients</string>
-    <string name="menu_adresses">Adresses</string>
+    <string name="menu_adresses">Addresses</string>
     <string name="menu_parametres">Paramètres</string>
     <string name="menu_propos">A Propos</string>
     <string name="menu_logout">Déconnexion</string>
 
-    <!-- messages -->
+    <!-- Settings messages -->
+    <string name="invalid_password">Your password doesn\'t match</string>
+    <string name="change_password_error">An error has occurred while changing your password, please try again later</string>
+    <string name="change_password_successful">Your password has been changed successfully</string>
+    <string name="title_activity_client">ClientActivity</string>
+
+    <!-- Add new contact messages -->
+    <string name="empty_client_name">Client name field is empty</string>
+    <string name="empty_client_code">Client code field is empty</string>
+    <string name="empty_client_address">Client address field is empty</string>
+    <string name="empty_client_phone">Client phone field is empty</string>
+    <string name="empty_client_fax">Client fax field is empty</string>
+    <string name="empty_client_email">Client email field is empty</string>
+    <string name="empty_client_contact">Client contact field is empty</string>
+    <string name="empty_client_contactPhone">Client contact phone field is empty</string>
+    <string name="invalid_client_phone">Invalid client phone number</string>
+    <string name="invalid_client_fax">Invalid client fax number</string>
+    <string name="invalid_client_contactPhone">Invalid contact phone number</string>
+    <string name="client_successfully_added">Client has been successfully added</string>
+
+    <!-- Add new site messages -->
+    <string name="empty_site_address">Site address field is empty</string>
+    <string name="empty_site_ville">Site ville field is empty</string>
+    <string name="empty_site_rue">Site rue field is empty</string>
+    <string name="empty_site_codepostal">Site code postal field is empty</string>
+    <string name="empty_site_longitude">Site longitude field is empty</string>
+    <string name="empty_site_latitude">Site latitude field is empty</string>
+    <string name="empty_site_contact">Site contact field is empty</string>
+    <string name="empty_site_contactPhone">Site contact phone field is empty</string>
+    <string name="invalid_site_codepostal">Invalid code postal</string>
+    <string name="invalid_site_contactPhone">Invalid contact phone number</string>
+    <string name="site_successfully_added">Site has been successfully added</string>
+
+    <!-- Add new site messages -->
+    <string name="empty_intervention_title">Intervention title field is empty</string>
+    <string name="empty_intervention_date_debut">Intervention start date field is empty</string>
+    <string name="empty_intervention_date_fin">Intervention end date field is empty</string>
+    <string name="empty_intervention_heure_debut">Intervention start hour field is empty</string>
+    <string name="empty_intervention_heure_fin">Intervention end hour field is empty</string>
+    <string name="empty_intervention_site">Intervention site field is empty</string>
+    <string name="empty_intervention_invalid_start_date">Intervention start date is invalid</string>
+    <string name="empty_intervention_invalid_end_date">Intervention end date is invalid</string>
+    <string name="empty_intervention_invalid_dates">Intervention end date is invalid</string>
+    <string name="empty_intervention_invalid_hour">Intervention hour is invalid</string>
+    <string name="intervention_successfully_added">Intervention has been successfully added</string>
 
 </resources>

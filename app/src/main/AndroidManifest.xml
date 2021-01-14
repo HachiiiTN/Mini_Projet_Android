@@ -10,10 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/AppTheme">
+        <activity android:name=".managers.AssignInterventionManager"></activity>
         <activity
-            android:name=".managers.Splash"
+            android:name=".managers.SplashManager"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +24,38 @@
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.RegisterActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".utils.InterventionActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".utils.ClientActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".managers.NewClientManager"
+            android:parentActivityName=".utils.ClientActivity" />
+        <activity
+            android:name=".utils.SiteActivity"
+            android:parentActivityName=".utils.ClientActivity" />
+        <activity
+            android:name=".managers.NewSiteManager"
+            android:parentActivityName=".utils.SiteActivity" />
+        <activity
+            android:name=".managers.NewInterventionManager"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".utils.HistoryActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".utils.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".utils.AboutActivity"
+            android:parentActivityName=".activities.MainActivity" />
     </application>
 
 </manifest>

@@ -2,62 +2,61 @@ package com.example.miniprojet.models;
 
 public class Clients {
 
-    private int id, valsync;
-    private String nom, adresse, tel, fax, email, contact, telcontact;
+    private String id, name, code, address, phone, fax, email, contact, contactPhone;
 
     public Clients() {
     }
 
-    public Clients(int id, int valsync, String nom, String adresse, String tel, String fax, String email, String contact, String telcontact) {
+    public Clients(String id, String name, String code, String address, String phone, String fax, String email, String contact, String contactPhone) {
         this.id = id;
-        this.valsync = valsync;
-        this.nom = nom;
-        this.adresse = adresse;
-        this.tel = tel;
+        this.name = name;
+        this.code = code;
+        this.address = address;
+        this.phone = phone;
         this.fax = fax;
         this.email = email;
         this.contact = contact;
-        this.telcontact = telcontact;
+        this.contactPhone = contactPhone;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getValsync() {
-        return valsync;
+    public String getName() {
+        return name;
     }
 
-    public void setValsync(int valsync) {
-        this.valsync = valsync;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNom() {
-        return nom;
+    public String getCode() {
+        return code;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getFax() {
@@ -84,26 +83,24 @@ public class Clients {
         this.contact = contact;
     }
 
-    public String getTelcontact() {
-        return telcontact;
+    public String getContactPhone() {
+        return contactPhone;
     }
 
-    public void setTelcontact(String telcontact) {
-        this.telcontact = telcontact;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     @Override
     public String toString() {
         return "Clients{" +
-                "id=" + id +
-                ", valsync=" + valsync +
-                ", nom='" + nom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", tel='" + tel + '\'' +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
                 ", fax='" + fax + '\'' +
                 ", email='" + email + '\'' +
                 ", contact='" + contact + '\'' +
-                ", telcontact='" + telcontact + '\'' +
+                ", contactPhone='" + contactPhone + '\'' +
                 '}';
     }
 }

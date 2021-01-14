@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "264278671334",
+    "project_id": "expert-maintenance",
+    "storage_bucket": "expert-maintenance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264278671334:android:3c1e55e442520f561be027",
+        "android_client_info": {
+          "package_name": "com.example.miniprojet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264278671334-etd82hle0rp2gt8gsjfhfd59mc8unm41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.miniprojet",
+            "certificate_hash": "bd3d3b870231e2beb70f496cc66b4eff815b7f8e"
+          }
+        },
+        {
+          "client_id": "264278671334-vjqo66ss4j7vmkhc9psfrmjdh0pvlqfl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0ysjcMEXHnEZICrPremay4IlBM_VVOKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264278671334-vjqo66ss4j7vmkhc9psfrmjdh0pvlqfl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
