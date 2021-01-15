@@ -23,16 +23,16 @@
     <!-- Drawer Navigation messages -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">El M3alem Jemlaa</string>
+    <string name="nav_header_title">Last name First name</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="menu_interventions">Interventions</string>
-    <string name="menu_inter_assign">Interventions à assigner</string>
+    <string name="menu_inter_assign">Interventions to assign</string>
     <string name="menu_messages">Messages</string>
     <string name="menu_clients">Clients</string>
-    <string name="menu_adresses">Addresses</string>
-    <string name="menu_parametres">Paramètres</string>
-    <string name="menu_propos">A Propos</string>
-    <string name="menu_logout">Déconnexion</string>
+    <string name="menu_adresses">Address</string>
+    <string name="menu_parametres">Settings</string>
+    <string name="menu_propos">About</string>
+    <string name="menu_logout">Logout</string>
 
     <!-- Settings messages -->
     <string name="invalid_password">Your password doesn\'t match</string>
@@ -56,8 +56,8 @@
 
     <!-- Add new site messages -->
     <string name="empty_site_address">Site address field is empty</string>
-    <string name="empty_site_ville">Site ville field is empty</string>
-    <string name="empty_site_rue">Site rue field is empty</string>
+    <string name="empty_site_ville">Site country field is empty</string>
+    <string name="empty_site_rue">Site street field is empty</string>
     <string name="empty_site_codepostal">Site code postal field is empty</string>
     <string name="empty_site_longitude">Site longitude field is empty</string>
     <string name="empty_site_latitude">Site latitude field is empty</string>
@@ -67,7 +67,7 @@
     <string name="invalid_site_contactPhone">Invalid contact phone number</string>
     <string name="site_successfully_added">Site has been successfully added</string>
 
-    <!-- Add new site messages -->
+    <!-- Add new intervention messages -->
     <string name="empty_intervention_title">Intervention title field is empty</string>
     <string name="empty_intervention_date_debut">Intervention start date field is empty</string>
     <string name="empty_intervention_date_fin">Intervention end date field is empty</string>

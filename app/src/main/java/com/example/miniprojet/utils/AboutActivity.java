@@ -17,7 +17,10 @@ public class AboutActivity extends AppCompatActivity {
         // Action bar
         getSupportActionBar().setTitle("About");
 
-        String infos = "©2021 KHEMIRI Hassen";
+        String infos = "©2021 *** " +
+                "KHEMIRI Hassen *** " +
+                "CHROUDI Amal *** " +
+                "BEN ROMDHANE Wissem";
         TextView infoAbout = findViewById(R.id.aboutInfo);
         infoAbout.setText(infos);
     }

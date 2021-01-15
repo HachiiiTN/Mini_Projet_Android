@@ -31,7 +31,7 @@
                 android:id="@+id/rgNomEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nom"
+                android:hint="Last name"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +53,7 @@
                 android:id="@+id/rgPrenomEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Prenom"
+                android:hint="First name"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
