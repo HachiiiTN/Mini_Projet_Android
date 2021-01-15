@@ -27,7 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ClientActivity extends AppCompatActivity {
@@ -66,9 +68,11 @@ public class ClientActivity extends AppCompatActivity {
         clientsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+                Gson gson = new Gson();
                 Intent goToSites = new Intent(ClientActivity.this, SiteActivity.class);
-                goToSites.putExtra("clientName", clientsList.get(i).getId());
-                goToSites.putExtra("clientCode", clientsList.get(i).getCode());
+                goToSites.putExtra("client", gson.toJson(clientsList.get(i)));
+                //goToSites.putExtra("clientName", clientsList.get(i).getId());
+                //goToSites.putExtra("clientCode", clientsList.get(i).getCode());
                 startActivity(goToSites);
             }
         });

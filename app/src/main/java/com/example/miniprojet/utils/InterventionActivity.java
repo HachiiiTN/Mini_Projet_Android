@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -71,16 +72,9 @@ public class InterventionActivity extends AppCompatActivity {
         intervLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Gson gson = new Gson();
                 Intent assignIntervention = new Intent(InterventionActivity.this, AssignInterventionManager.class);
-                assignIntervention.putExtra("interventionId", intervsList.get(i).getId());
-                assignIntervention.putExtra("interventionTitle", intervsList.get(i).getTitle());
-                assignIntervention.putExtra("interventionClient", intervsList.get(i).getClientId());
-                assignIntervention.putExtra("interventionSite", intervsList.get(i).getSiteId());
-                assignIntervention.putExtra("interventionDATDEB", intervsList.get(i).getDatedeb());
-                assignIntervention.putExtra("interventionDATFIN", intervsList.get(i).getDatefin());
-                assignIntervention.putExtra("interventionHRDEB", intervsList.get(i).getHeuredeb());
-                assignIntervention.putExtra("interventionHRFIN", intervsList.get(i).getHeurefin());
-                assignIntervention.putExtra("interventionComments", intervsList.get(i).getCommentaire());
+                assignIntervention.putExtra("intervention", gson.toJson(intervsList.get(i)));
                 startActivity(assignIntervention);
             }
         });
