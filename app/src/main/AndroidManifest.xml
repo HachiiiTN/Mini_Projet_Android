@@ -32,7 +32,7 @@
             android:name=".utils.InterventionActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".adapters.DetailManager"
+            android:name=".managers.DetailManager"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".managers.AssignInterventionManager"

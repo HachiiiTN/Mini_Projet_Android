@@ -1,12 +1,15 @@
-package com.example.miniprojet.adapters;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.miniprojet.managers;
 
 import android.os.Bundle;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.miniprojet.R;
+import com.example.miniprojet.adapters.MyPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,6 +28,7 @@ public class DetailManager extends AppCompatActivity {
     // Vars
     private Boolean interventionDone;
     private String intervId, employeeId, intervTitle, intervClient, intervSite, intervDATDEB, intervDATFIN, intervHRDEB, intervHRFIN, intervComments;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,33 @@ public class DetailManager extends AppCompatActivity {
         // init firebase & layouts
         initFirebase();
         initLayout();
+
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText("Details"));
+        tabLayout.addTab(tabLayout.newTab().setText("Files"));
+        tabLayout.addTab(tabLayout.newTab().setText("Signatures"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
     }
+
 
     @Override
     public void onStart() {
@@ -92,4 +122,6 @@ public class DetailManager extends AppCompatActivity {
         intervDateField.setText(intervDATDEB);
         intervDoneSwitch.setChecked(interventionDone);
     }
+
+
 }

@@ -80,5 +80,6 @@
     <string name="empty_intervention_invalid_hour">Intervention hour is invalid</string>
     <string name="intervention_successfully_added">Intervention has been successfully added</string>
     <string name="intervention_successfully_assigned">Intervention has been assigned successfully</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
