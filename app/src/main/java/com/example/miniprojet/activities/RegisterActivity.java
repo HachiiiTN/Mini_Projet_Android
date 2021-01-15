@@ -144,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void displayAlertDialog(String string) {
         alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Create new account");
+        alertDialog.setTitle("Error ! ");
         alertDialog.setMessage(string);
         alertDialog.show();
     }
