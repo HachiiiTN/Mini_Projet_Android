@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -165,18 +166,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intervListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+                Gson gson = new Gson();
                 Intent goToDetails = new Intent(MainActivity.this, DetailManager.class);
-                goToDetails.putExtra("interventionId", intervsList.get(i).getId());
-                goToDetails.putExtra("employeeId", mAuth.getUid());
-                goToDetails.putExtra("interventionTitle", intervsList.get(i).getTitle());
-                goToDetails.putExtra("interventionClient", intervsList.get(i).getClientId());
-                goToDetails.putExtra("interventionSite", intervsList.get(i).getSiteId());
-                goToDetails.putExtra("interventionDone", intervsList.get(i).getTerminer());
-                goToDetails.putExtra("interventionDATDEB", intervsList.get(i).getDatedeb());
-                goToDetails.putExtra("interventionDATFIN", intervsList.get(i).getDatefin());
-                goToDetails.putExtra("interventionHRDEB", intervsList.get(i).getHeuredeb());
-                goToDetails.putExtra("interventionHRFIN", intervsList.get(i).getHeurefin());
-                goToDetails.putExtra("interventionComments", intervsList.get(i).getCommentaire());
+                goToDetails.putExtra("intervention", gson.toJson(intervsList.get(i)));
                 startActivity(goToDetails);
             }
         });

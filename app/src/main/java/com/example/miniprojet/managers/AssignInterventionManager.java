@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,7 @@ public class AssignInterventionManager extends AppCompatActivity {
     private Spinner assignEmployeeSpinner;
 
     // vars
+    private Interventions intervention;
     private String employeeId;
     private ArrayList<String> employeesList;
     private ArrayAdapter<String> employeeAdapter;
@@ -58,18 +60,8 @@ public class AssignInterventionManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign_intervention_manager);
 
-        // recover client data
-        Bundle b = getIntent().getExtras();
-        assert b != null;
-        intervId = (String) b.get("interventionId");
-        intervTitle = (String) b.get("interventionTitle");
-        intervClient = (String) b.get("interventionClient");
-        intervSite = (String) b.get("interventionSite");
-        intervDATDEB = (String) b.get("interventionDATDEB");
-        intervDATFIN = (String) b.get("interventionDATFIN");
-        intervHRDEB = (String) b.get("interventionHRDEB");
-        intervHRFIN = (String) b.get("interventionHRFIN");
-        intervComments = (String) b.get("interventionComments");
+        // recover intervention data
+        recoverInterventionData();
 
         // Action bar
         getSupportActionBar().setTitle(intervId);
@@ -196,6 +188,23 @@ public class AssignInterventionManager extends AppCompatActivity {
 
             }
         });
+    }
+
+    // recover intervention data
+    private void recoverInterventionData() {
+        Gson gson = new Gson();
+        String strObj = getIntent().getStringExtra("intervention");
+        intervention = gson.fromJson(strObj, Interventions.class);
+
+        intervId = intervention.getId();
+        intervTitle = intervention.getTitle();
+        intervClient = intervention.getClientId();
+        intervSite = intervention.getSiteId();
+        intervDATDEB = intervention.getDatedeb();
+        intervDATFIN = intervention.getDatefin();
+        intervHRDEB = intervention.getHeuredeb();
+        intervHRFIN = intervention.getHeurefin();
+        intervComments = intervention.getCommentaire();
     }
 
     private void displayAlertDialog(String string) {

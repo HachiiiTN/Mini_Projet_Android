@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,7 @@ public class SiteActivity extends AppCompatActivity {
     private ArrayList<Sites> sitesList;
     private SitesListAdapter siteAdapter;
     private String clientName, clientCode;
+    private Clients client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +57,8 @@ public class SiteActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Sites");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // populate data fields
-        Bundle b = getIntent().getExtras();
-        assert b != null;
-        clientName = (String) b.get("clientName");
-        clientCode = (String) b.get("clientCode");
+        // recover client data
+        recoverClientData();
 
         // init firebase & layouts
         initFirebase();
@@ -93,6 +92,16 @@ public class SiteActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    // recover client data
+    private void recoverClientData() {
+        Gson gson = new Gson();
+        String strObj = getIntent().getStringExtra("client");
+        client = gson.fromJson(strObj, Clients.class);
+        assert client != null;
+        clientName = client.getName();
+        clientCode = client.getCode();
     }
 
     // init firebase

@@ -9,10 +9,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.miniprojet.R;
 import com.example.miniprojet.adapters.MyPagerAdapter;
+import com.example.miniprojet.models.Interventions;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 public class DetailManager extends AppCompatActivity {
 
@@ -24,8 +26,12 @@ public class DetailManager extends AppCompatActivity {
     // Layouts
     private TextView intervTitleField, intervClientField, intervTimeField, intervDateField;
     private Switch intervDoneSwitch;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private MyPagerAdapter adapter;
 
     // Vars
+    private Interventions intervention;
     private Boolean interventionDone;
     private String intervId, employeeId, intervTitle, intervClient, intervSite, intervDATDEB, intervDATFIN, intervHRDEB, intervHRFIN, intervComments;
 
@@ -36,19 +42,7 @@ public class DetailManager extends AppCompatActivity {
         setContentView(R.layout.activity_detail_manager);
 
         // recover client data
-        Bundle b = getIntent().getExtras();
-        assert b != null;
-        intervId = (String) b.get("interventionId");
-        employeeId = (String) b.get("employeeId");
-        intervTitle = (String) b.get("interventionTitle");
-        interventionDone = (Boolean) b.get("interventionDone");
-        intervClient = (String) b.get("interventionClient");
-        intervSite = (String) b.get("interventionSite");
-        intervDATDEB = (String) b.get("interventionDATDEB");
-        intervDATFIN = (String) b.get("interventionDATFIN");
-        intervHRDEB = (String) b.get("interventionHRDEB");
-        intervHRFIN = (String) b.get("interventionHRFIN");
-        intervComments = (String) b.get("interventionComments");
+        recoverInterventionData();
 
         // Action bar
         getSupportActionBar().setTitle("Intervention Details");
@@ -58,29 +52,6 @@ public class DetailManager extends AppCompatActivity {
         initFirebase();
         initLayout();
 
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Details"));
-        tabLayout.addTab(tabLayout.newTab().setText("Files"));
-        tabLayout.addTab(tabLayout.newTab().setText("Signatures"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
 
     }
 
@@ -115,13 +86,60 @@ public class DetailManager extends AppCompatActivity {
         intervDateField = findViewById(R.id.detailIntervDate);
         intervDoneSwitch = findViewById(R.id.detailIntervSwitch);
 
+        // update fields
         String time = intervHRDEB + " - " + intervHRFIN;
         intervTitleField.setText(intervTitle.toUpperCase());
         intervClientField.setText(intervClient);
         intervTimeField.setText(time);
         intervDateField.setText(intervDATDEB);
         intervDoneSwitch.setChecked(interventionDone);
+
+        // tablayout and pager
+        initTabLayoutsAndPager();
     }
 
+    private void initTabLayoutsAndPager() {
+        // tabLayout and pager
+        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText("Details"));
+        tabLayout.addTab(tabLayout.newTab().setText("Files"));
+        tabLayout.addTab(tabLayout.newTab().setText("Signatures"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        viewPager = findViewById(R.id.pager);
+        adapter = new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    // recover intervention data
+    private void recoverInterventionData() {
+        Gson gson = new Gson();
+        String strObj = getIntent().getStringExtra("intervention");
+        intervention = gson.fromJson(strObj, Interventions.class);
+
+        intervTitle = intervention.getId();
+        intervClient = intervention.getClientId();
+        intervDATDEB = intervention.getDatedeb();
+        intervHRDEB = intervention.getHeuredeb();
+        intervHRFIN = intervention.getHeurefin();
+        interventionDone = intervention.getTerminer();
+    }
+
+    // send intervention data to tabLayout fragments
+    public Interventions getInterventionId() {
+        return intervention;
+    }
 }
