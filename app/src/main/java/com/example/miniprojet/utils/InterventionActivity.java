@@ -1,19 +1,28 @@
 package com.example.miniprojet.utils;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.miniprojet.R;
+import com.example.miniprojet.activities.MainActivity;
 import com.example.miniprojet.adapters.AssignIntervsListAdapter;
 import com.example.miniprojet.adapters.ClientsListAdapter;
 import com.example.miniprojet.adapters.InterventionsListAdapter;
+import com.example.miniprojet.managers.AssignInterventionManager;
 import com.example.miniprojet.managers.NewInterventionManager;
+import com.example.miniprojet.managers.NewSiteManager;
 import com.example.miniprojet.models.Clients;
 import com.example.miniprojet.models.Interventions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,7 +58,7 @@ public class InterventionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intervention);
 
         // Action bar
-        getSupportActionBar().setTitle("à Assigner");
+        getSupportActionBar().setTitle("To be assigned");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // init firebase & layouts
@@ -58,6 +67,23 @@ public class InterventionActivity extends AppCompatActivity {
 
         // display interventions list
         displayInterventionsList();
+
+        intervLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent assignIntervention = new Intent(InterventionActivity.this, AssignInterventionManager.class);
+                assignIntervention.putExtra("interventionId", intervsList.get(i).getId());
+                assignIntervention.putExtra("interventionTitle", intervsList.get(i).getTitle());
+                assignIntervention.putExtra("interventionClient", intervsList.get(i).getClientId());
+                assignIntervention.putExtra("interventionSite", intervsList.get(i).getSiteId());
+                assignIntervention.putExtra("interventionDATDEB", intervsList.get(i).getDatedeb());
+                assignIntervention.putExtra("interventionDATFIN", intervsList.get(i).getDatefin());
+                assignIntervention.putExtra("interventionHRDEB", intervsList.get(i).getHeuredeb());
+                assignIntervention.putExtra("interventionHRFIN", intervsList.get(i).getHeurefin());
+                assignIntervention.putExtra("interventionComments", intervsList.get(i).getCommentaire());
+                startActivity(assignIntervention);
+            }
+        });
 
         newInterv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,4 +150,5 @@ public class InterventionActivity extends AppCompatActivity {
             }
         });
     }
+
 }

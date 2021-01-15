@@ -181,29 +181,4 @@ public class NewSiteManager extends AppCompatActivity {
         alertDialog.show();
     }
 
-    /*
-    // Populate Clients dropdown list
-    private void populateClients() {
-        clientAdapter = new ArrayAdapter<>(NewSiteManager.this, android.R.layout.simple_spinner_dropdown_item, clientsList);
-        clientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        myRef.child("Clients").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                clientsList.clear();
-                for (DataSnapshot clientData : dataSnapshot.getChildren()) {
-                    Clients client = clientData.getValue(Clients.class);
-                    assert client != null;
-                    clientsList.add(client.getName());
-                    siteClientSpinner.setAdapter(clientAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-     */
 }
