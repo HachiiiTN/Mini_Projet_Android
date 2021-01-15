@@ -101,8 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     registerBtn.setClickable(true);
                                     Toast.makeText(RegisterActivity.this, "Error ! " + task.getException(), Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Employees employee = new Employees(mAuth.getUid(), true, nom, prenom, email);
-
+                                    Employees employee = new Employees(mAuth.getUid(), true, nom.toUpperCase(), prenom, email);
                                     myRef = myRef.child("Employees").child(mAuth.getUid());
                                     myRef.setValue(employee).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

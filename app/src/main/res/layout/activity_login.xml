@@ -59,7 +59,6 @@ tools:context=".activities.LoginActivity">
             android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:text="admin@exm.com"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorHint" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -84,7 +83,6 @@ tools:context=".activities.LoginActivity">
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
-            android:text="123456"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorHint" />
     </com.google.android.material.textfield.TextInputLayout>

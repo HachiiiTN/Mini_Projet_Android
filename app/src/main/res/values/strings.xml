@@ -18,6 +18,7 @@
     <string name="empty_nom">Last name field is empty</string>
     <string name="empty_prenom">First name field is empty</string>
     <string name="empty_confirm_password">Confirm password field is empty</string>
+    <string name="register_successful">You have successfully signed up</string>
 
     <!-- Drawer Navigation messages -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

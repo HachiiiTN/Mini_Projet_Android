@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.miniprojet.R;
+import com.example.miniprojet.adapters.AssignIntervsListAdapter;
 import com.example.miniprojet.adapters.ClientsListAdapter;
 import com.example.miniprojet.adapters.InterventionsListAdapter;
 import com.example.miniprojet.managers.NewInterventionManager;
@@ -40,7 +41,7 @@ public class InterventionActivity extends AppCompatActivity {
 
     // vars
     private ArrayList<Interventions> intervsList;
-    private InterventionsListAdapter interventionAdapter;
+    private AssignIntervsListAdapter interventionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class InterventionActivity extends AppCompatActivity {
     }
 
     private void displayInterventionsList() {
-        interventionAdapter = new InterventionsListAdapter(InterventionActivity.this, intervsList);
+        interventionAdapter = new AssignIntervsListAdapter(InterventionActivity.this, intervsList);
         myRef.child("Interventions").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
