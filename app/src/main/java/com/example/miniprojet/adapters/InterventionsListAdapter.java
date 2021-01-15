@@ -74,7 +74,6 @@ public class InterventionsListAdapter extends ArrayAdapter<Interventions> {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    Toast.makeText(getContext(), "YES clicked", Toast.LENGTH_SHORT).show();
                                     myRef = myRef.child("Interventions").child(intervention.getSiteId()).child(intervention.getId()).child("terminer");
                                     myRef.setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -85,7 +84,6 @@ public class InterventionsListAdapter extends ArrayAdapter<Interventions> {
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:
-                                    Toast.makeText(getContext(), "NO clicked", Toast.LENGTH_SHORT).show();
                                     myRef = myRef.child("Interventions").child(intervention.getSiteId()).child(intervention.getId()).child("terminer");
                                     myRef.setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

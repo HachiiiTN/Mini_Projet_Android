@@ -79,5 +79,6 @@
     <string name="empty_intervention_invalid_dates">Intervention end date is invalid</string>
     <string name="empty_intervention_invalid_hour">Intervention hour is invalid</string>
     <string name="intervention_successfully_added">Intervention has been successfully added</string>
+    <string name="intervention_successfully_assigned">Intervention has been assigned successfully</string>
 
 </resources>
