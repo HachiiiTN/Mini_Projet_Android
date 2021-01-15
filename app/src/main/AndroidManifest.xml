@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".managers.AssignInterventionManager"></activity>
         <activity
             android:name=".managers.SplashManager"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
@@ -31,6 +30,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".utils.InterventionActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".adapters.DetailManager"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".managers.AssignInterventionManager"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".utils.ClientActivity"

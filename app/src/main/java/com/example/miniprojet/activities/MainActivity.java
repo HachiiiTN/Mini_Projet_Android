@@ -2,23 +2,21 @@ package com.example.miniprojet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniprojet.R;
+import com.example.miniprojet.adapters.DetailManager;
 import com.example.miniprojet.adapters.InterventionsListAdapter;
-import com.example.miniprojet.managers.AssignInterventionManager;
-import com.example.miniprojet.managers.NewInterventionManager;
 import com.example.miniprojet.models.Employees;
 import com.example.miniprojet.models.Interventions;
 import com.example.miniprojet.utils.AboutActivity;
 import com.example.miniprojet.utils.ClientActivity;
-import com.example.miniprojet.utils.HistoryActivity;
 import com.example.miniprojet.utils.InterventionActivity;
 import com.example.miniprojet.utils.SettingsActivity;
 import com.example.miniprojet.utils.SiteActivity;
@@ -34,10 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -105,14 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // display interventions assigned to logged user
         displayInterventionsList();
 
-        intervListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-                Intent goToSites = new Intent(MainActivity.this, AssignInterventionManager.class);
-                goToSites.putExtra("intervName", intervsList.get(i).getId());
-                startActivity(goToSites);
-            }
-        });
     }
 
     @Override
@@ -177,7 +163,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // init layouts
     private void initLayout() {
         intervsList = new ArrayList<>();
-        intervListView = findViewById(R.id.intervLv);
+        intervListView = findViewById(R.id.homeListView);
+
+        intervListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+                Intent goToDetails = new Intent(MainActivity.this, DetailManager.class);
+                goToDetails.putExtra("interventionId", intervsList.get(i).getId());
+                goToDetails.putExtra("employeeId", mAuth.getUid());
+                goToDetails.putExtra("interventionTitle", intervsList.get(i).getTitle());
+                goToDetails.putExtra("interventionClient", intervsList.get(i).getClientId());
+                goToDetails.putExtra("interventionSite", intervsList.get(i).getSiteId());
+                goToDetails.putExtra("interventionDone", intervsList.get(i).getTerminer());
+                goToDetails.putExtra("interventionDATDEB", intervsList.get(i).getDatedeb());
+                goToDetails.putExtra("interventionDATFIN", intervsList.get(i).getDatefin());
+                goToDetails.putExtra("interventionHRDEB", intervsList.get(i).getHeuredeb());
+                goToDetails.putExtra("interventionHRFIN", intervsList.get(i).getHeurefin());
+                goToDetails.putExtra("interventionComments", intervsList.get(i).getCommentaire());
+                startActivity(goToDetails);
+            }
+        });
     }
 
     private void signOut() {
