@@ -1,7 +1,9 @@
 package com.example.miniprojet.managers;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -18,6 +20,7 @@ import com.example.miniprojet.adapters.ClientsListAdapter;
 import com.example.miniprojet.adapters.MyPagerAdapter;
 import com.example.miniprojet.models.Clients;
 import com.example.miniprojet.models.Interventions;
+import com.example.miniprojet.models.Sites;
 import com.example.miniprojet.utils.ClientActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,10 +50,11 @@ public class DetailManager extends AppCompatActivity {
     private MyPagerAdapter adapter;
 
     // Vars
+    private Sites interventionSite;
     private Clients interventionClient;
     private Interventions intervention;
     private Boolean interventionDone;
-    private String intervId, employeeId, intervTitle, intervClient, intervSite, intervDATDEB, intervDATFIN, intervHRDEB, intervHRFIN, intervComments;
+    private String intervTitle, intervClient, intervDATDEB, intervHRDEB, intervHRFIN;
 
 
     @Override
@@ -61,15 +65,19 @@ public class DetailManager extends AppCompatActivity {
         // recover client data
         recoverInterventionData();
 
+        // init firebase
+        initFirebase();
+
         // Action bar
         getSupportActionBar().setTitle("Intervention Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // init firebase & layouts
-        initFirebase();
-        initLayout();
-
+        // recover client & site data
         getClientDataFromDatabase();
+        getSiteDataFromDatabase();
+
+        // init layouts
+        initLayout();
 
         intervDoneSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -142,30 +150,39 @@ public class DetailManager extends AppCompatActivity {
 
     private void initTabLayoutsAndPager() {
         // tabLayout and pager
-        tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Details"));
-        tabLayout.addTab(tabLayout.newTab().setText("Files"));
-        tabLayout.addTab(tabLayout.newTab().setText("Signatures"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        viewPager = findViewById(R.id.pager);
-        adapter = new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        new CountDownTimer(250, 250) {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+            public void onTick(long millisUntilFinished) {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+            public void onFinish() {
+                tabLayout = findViewById(R.id.tabLayout);
+                tabLayout.addTab(tabLayout.newTab().setText("Details"));
+                tabLayout.addTab(tabLayout.newTab().setText("Files"));
+                tabLayout.addTab(tabLayout.newTab().setText("Signatures"));
+                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                viewPager = findViewById(R.id.pager);
+                adapter = new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+                viewPager.setAdapter(adapter);
+                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        viewPager.setCurrentItem(tab.getPosition());
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                    }
+                });
             }
-        });
+        }.start();
     }
 
     // recover intervention data
@@ -185,12 +202,30 @@ public class DetailManager extends AppCompatActivity {
     // recover client data
     private void getClientDataFromDatabase() {
         interventionClient = new Clients();
-        myRef.child("Clients").child(intervention.getClientId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("Clients").child(intervention.getClientId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Clients client = dataSnapshot.getValue(Clients.class);
                 interventionClient = client;
-                Log.e("TAG", interventionClient.toString());
+                Log.e("client_TAG", interventionClient.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // recover site data
+    private void getSiteDataFromDatabase() {
+        interventionSite = new Sites();
+        myRef.child("Sites").child(intervention.getClientId()).child(intervention.getSiteId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Sites site = dataSnapshot.getValue(Sites.class);
+                interventionSite = site;
+                Log.e("site_TAG", interventionSite.toString());
             }
 
             @Override
@@ -207,6 +242,10 @@ public class DetailManager extends AppCompatActivity {
 
     public Clients getInterventionClient() {
         return interventionClient;
+    }
+
+    public Sites getInterventionSite() {
+        return interventionSite;
     }
 
 }
