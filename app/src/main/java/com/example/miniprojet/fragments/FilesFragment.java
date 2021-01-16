@@ -36,6 +36,7 @@ public class FilesFragment extends Fragment {
                            @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_files, container, false);
+
         selectedImage = view.findViewById(R.id.selectedImage);
         btnPhoto = view.findViewById(R.id.btnPhoto);
         btnGallery = view.findViewById(R.id.btnGallery);
@@ -87,7 +88,7 @@ public class FilesFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CAMERA_REQUEST_CODE){
-            Bitmap image = (Bitmap) data.getExtras().get("date");
+            Bitmap image = (Bitmap) data.getExtras().get("data");
             selectedImage.setImageBitmap(image);
         }
 
