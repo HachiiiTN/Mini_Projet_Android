@@ -161,6 +161,7 @@
             android:background="@color/colorAccent"
             android:text="Send report"
             android:textColor="#FFFFFF"
+            android:drawableLeft="@drawable/iconfinder_email_264846"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
