@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/detailHour"
         android:layout_width="172dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/detailComment"
         android:layout_width="173dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -60,10 +60,10 @@
         android:layout_marginTop="8dp"
         android:text="Comments"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/detailHour" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/detailFinished"
         android:layout_width="173dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/detailDate"
         android:layout_width="174dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -82,5 +82,5 @@
         android:layout_marginRight="16dp"
         android:text="Date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/detailFinished" />
 </androidx.constraintlayout.widget.ConstraintLayout>
