@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.miniprojet.Fragments.DetailsFragment;
-import com.example.miniprojet.Fragments.FilesFragment;
-import com.example.miniprojet.Fragments.SignaturesFragment;
+import com.example.miniprojet.fragments.DetailsFragment;
+import com.example.miniprojet.fragments.FilesFragment;
+import com.example.miniprojet.fragments.SignaturesFragment;
 
 public class MyPagerAdapter extends FragmentPagerAdapter {
 
