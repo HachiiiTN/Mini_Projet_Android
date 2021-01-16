@@ -1,4 +1,4 @@
-package com.example.miniprojet.Fragments;
+package com.example.miniprojet.fragments;
 
 import android.os.Bundle;
 
