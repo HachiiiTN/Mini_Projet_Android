@@ -39,7 +39,10 @@ public class FilesFragment extends Fragment {
 
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
-    public static final int GALLERY_REQUEST_CODE = 105;
+    public static final int GALLERY_REQUEST_CODE = 100;
+    private static final int RESULT_CODE = 1;
+    private static final int RESULT_OK = -1 ;
+    Uri ImageUri;
     ImageView selectedImage;
     Button btnGallery,btnPhoto;
 
@@ -62,7 +65,7 @@ public class FilesFragment extends Fragment {
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, GALLERY_REQUEST_CODE);
             }
         });
@@ -98,9 +101,14 @@ public class FilesFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CAMERA_REQUEST_CODE){
-            Bitmap image = (Bitmap) data.getExtras().get("date");
+            Bitmap image = (Bitmap) data.getExtras().get("data");
             selectedImage.setImageBitmap(image);
+        }
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+            ImageUri = data.getData();
+            selectedImage.setImageURI(ImageUri);
         }
 
 
