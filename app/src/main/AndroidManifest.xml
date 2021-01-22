@@ -71,6 +71,9 @@
             android:name=".managers.AssignInterventionManager"
             android:parentActivityName=".activities.MainActivity" />
         <activity
+            android:name=".managers.EditInterventionManager"
+            android:parentActivityName=".managers.DetailManager" />
+        <activity
             android:name=".utils.ClientActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity
